@@ -2,7 +2,7 @@ function mapeamentoPraPagar(listaDeCompras, listaDeEmails){
 
     if(Object.values(listaDeCompras).length == 0 || listaDeEmails.length == 0)
     {
-        return ("função não pode ser executada, alguma lista está vazia, certifique-se disso!")
+        return ("função não pode ser executada, alguma lista está vazia, certifique-se disso!");
     }
 
     let arrQtd = [];
