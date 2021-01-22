@@ -23,8 +23,11 @@ function mapeamentoPraPagar(listaDeCompras, listaDeEmails){
 
     let soma = 0;
 
-    for(let s of multiplicacao)soma += s;
-
+    for(let s of multiplicacao)
+    {
+        soma += s;
+    }
+    
     let divisao = soma/listaDeEmails.length;
     let divisaomid = Math.floor(divisao);
     let divisaoLast = soma - divisaomid * (listaDeEmails.length - 1);
