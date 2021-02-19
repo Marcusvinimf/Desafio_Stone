@@ -1,45 +1,49 @@
-function mapeamentoPraPagar(listaDeCompras, listaDeEmails){
+const EmptyEmailListException = require('./exceptions/EmptyEmailListException')
+const EmptyShoppingListException = require('./exceptions/EmptyShoppingListException')
 
-    if(Object.values(listaDeCompras).length == 0 || listaDeEmails.length == 0)
-    {
-        return ("função não pode ser executada, alguma lista está vazia, certifique-se disso!");
+
+function main(shoppingList, emailList) {
+    try {
+        splitShoppingListByEmail(shoppingList, emailList)
+    } catch (e) {
+        return e
     }
 
-    let arrQtd = [];
-    let arrPreco = [];
-    
-    for (let i in listaDeCompras)
-    {
-        arrQtd.push(listaDeCompras[i].qtd);
-        arrPreco.push(listaDeCompras[i].preco);
+}
+
+function splitShoppingListByEmail(shoppingList, emailList) {
+
+    if (!shoppingList.length) {
+        throw EmptyShoppingListException()
     }
 
-    let multiplicacao = [];
-
-    for(let i=0; i<arrQtd.length; i++)
-    {
-        multiplicacao.push(arrQtd[i] * arrPreco[i]);
-    } 
-
-    let soma = 0;
-
-    for(let s of multiplicacao)
-    {
-        soma += s;
+    if (!emailList) {
+        throw EmptyEmailListException()
     }
-    
-    let divisao = soma/listaDeEmails.length;
-    let divisaomid = Math.floor(divisao);
-    let divisaoLast = soma - divisaomid * (listaDeEmails.length - 1);
 
-    let mapa = new Map();
-    
-    for(let i=0; i<listaDeEmails.length -1; i++)
-    {
-        mapa.set(listaDeEmails[i], divisaomid);
-    } 
-    
-    mapa.set(listaDeEmails[listaDeEmails.length -1], divisaoLast);
 
-    return mapa;
+    let totalPrice = 0;
+    shoppingList.map((item) => {
+        item['total_price'] = item.quantity * item.price
+        totalPrice += item['total_price']
+    })
+
+    let numberOfPeopleToPay = emailList.length
+    let valueToPay = Math.floor(totalPrice / numberOfPeopleToPay)
+    let remainingAmount = totalPrice - (numberOfPeopleToPay * valueToPay)
+
+
+    let map  = new Map();
+    emailList.map((email) => {
+        map.set(email, valueToPay)
+    })
+
+    if (remainingAmount) {
+        const lastEmail = emailList[emailList.length -1]
+        const lastValueToPay = (valueToPay + remainingAmount) 
+        map.set(last_email, lastValueToPay)
+    }
+
+
+    return map;
 }
