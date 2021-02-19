@@ -1,4 +1,5 @@
-function mapeamentoPraPagar(listaDeCompras, listaDeEmails){
+const EmptyEmailListException = require('./exceptions/EmptyEmailListException')
+const EmptyShoppingListException = require('./exceptions/EmptyShoppingListException')
 
     if(Object.values(listaDeCompras).length == 0 || listaDeEmails.length == 0)
     {
